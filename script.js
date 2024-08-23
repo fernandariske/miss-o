@@ -1,51 +1,61 @@
-const caixaprincipal = document.querySelector(".caixa-principal");
+const caixaPrincipal = document.querySelector(".caixa-principal");
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
-const caixaAlternativa = document.querySelector(".caixa-alternativa");
+const caixaAlternativas = document.querySelector(".caixa-alternativas");
 const caixaResultado = document.querySelector(".caixa-resultado");
-const textoResultado = document.querySelector(".caixa-resultado");
+const textoResultado = document.querySelector(".texto-resultado");
+
 const perguntas = [
     {
-    enunciado: "Na sua opinião, oque é o index.html?"
+    enunciado: "Na sua opinião, como a agricultura sustentável pode influenciar a disponibilidade e o custo de alimentos no mercado de trabalho atual?",
     alternativas:[
-        (Linguagem de Marcação de Hipertexto) é o código que você usa para estruturar uma página web e seu conteúdo.
-        é uma linguagem de programação que permite a você implementar itens complexos em páginas web.
+        {
+            texto:"Reduzindo os custos de produção, tornando os alimentos mais acessíveis.",
+            afirmacao:"Reduzir os custos de produção é uma estratégia eficaz para tornar os alimentos mais acessíveis,promovendo uma alimentação saudável e econômica para todos."
+        },
+        {
+            texto:"Aumentando a dependência de agrotóxicos e fertilizantes sintéticos para maximizar o rendimento.",
+            afirmacao:"Aumentar a dependência de agrotóxicos e fertilizantes sintéticos pode maximizar o rendimento das colheitas, mas é crucial considerar os impactos ambientaise a saúde a longo prazo,Controle de Pragas e Doenças: Esses produtos ajudam a proteger as plantas contra pragas e doenças, reduzindo perdas e melhorando a saúde das culturas."
+        }
+        
     ]
-    },
-{
-    enunciado: qual
-    alternativas:[
-        ;
-        ;
- ]
-  {,
-    }
- enunciado: qual
-    alternativas:[
-.
-.
-]
-}
+     }
 ];
 
+let atual = 0;
+let perguntaAtual;
+let historiaFinal = "";
 
-let atual =0;
-let perguntasAtual
-
-function mostraPerguntas() {
-    perguntasAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntasAtual.enunciado;
-    caixaAlternativa.textContent = "";
+function mostraPergunta() {
+    if(atual >= perguntas.length){
+        mostraResultado();
+        return;
+    }
+    perguntaAtual = perguntas[atual];
+    caixaPerguntas.textContent = perguntaAtual.enunciado;
+    caixaAlternativas.textContent = "";
+    textoResultado.textContent = "";
     mostraAlternativas();
 }
 
 function mostraAlternativas(){
-    for (const alternativa of perguntasAtual.alternativas) {
+    for(const alternativa of perguntaAtual.alternativas){
         const botaoAlternativas = document.createElement("button");
-        botaoAlternativas.textContent = alternativa;
-        caixaAlternativas.appendchild(botaoAlternativas);
-      
-        }
-
+        botaoAlternativas.textContent = alternativa.texto;
+        botaoAlternativas.addEventListener('click', ()=> respostaSelecionada(alternativa));
+        caixaAlternativas.appendChild(botaoAlternativas);        
+    }
+}
+function respostaSelecionada(opcaoSelecionada){
+    const afirmacao = opcaoSelecionada.afirmacao;
+    historiaFinal = afirmacao;
+    atual++
+    mostraPergunta();
 }
 
-mostraPerguntas();
+mostraPergunta();
+
+function mostraResultado(){
+    caixaPerguntas.textContent = "Em 2030...";
+    textoResultado.textContent = historiaFinal;
+    caixaAlternativas.textContent = "";
+}
